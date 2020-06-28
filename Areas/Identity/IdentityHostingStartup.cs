@@ -16,12 +16,12 @@ namespace HOHSI.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<HOHSIContext>(options =>
-                    options.UseSqlServer(
+               /* services.AddDbContext<HOHSIContext>(options =>
+                    options.UseMySql(
                         context.Configuration.GetConnectionString("HOHSIContextConnection")));
 
                 services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<HOHSIContext>();
+                    .AddEntityFrameworkStores<HOHSIContext>();*/
             });
         }
     }

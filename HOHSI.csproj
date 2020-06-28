@@ -5,6 +5,15 @@
     <UserSecretsId>aspnet-HOHSI-75825E50-A7DE-45BB-8AA4-EA45015EF404</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200628040806_initMigration.cs" />
+    <Compile Remove="Data\Migrations\20200628040806_initMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200628041852_initMigration.cs" />
+    <Compile Remove="Data\Migrations\20200628041852_initMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200628041522_initMigration.cs" />
+    <Compile Remove="Migrations\20200628041522_initMigration.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
@@ -21,7 +30,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
