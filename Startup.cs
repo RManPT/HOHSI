@@ -12,6 +12,7 @@ using HOHSI.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HOHSI.Areas.Identity.Data;
 
 namespace HOHSI
 {
@@ -27,11 +28,13 @@ namespace HOHSI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+              /*services.AddDbContext<HOHSIContext>(options =>
+                  options.UseMySql(
+                      Configuration.GetConnectionString("HOHSIContextConnection")));
+              services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                  .AddEntityFrameworkStores<HOHSIContext>();*/
+
+     
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -43,6 +46,7 @@ namespace HOHSI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseStatusCodePages();
             }
             else
             {
