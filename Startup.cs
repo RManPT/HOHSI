@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HOHSI.Areas.Identity.Data;
+using HOHSI.Models;
+using HOHSI.Models.Interfaces;
+using HOHSI.Models.Repositories;
 
 namespace HOHSI
 {
@@ -36,9 +39,13 @@ namespace HOHSI
               services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
                   .AddEntityFrameworkStores<HOHSIContext>();
 
-     
             services.AddControllersWithViews();
             services.AddRazorPages();
+            //Repository pattern: connecting interfaces with implementations
+            services.AddTransient<IExerciseRepository, ExerciseRepository>();
+            services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
+            services.AddTransient<IPrescriptedExerciseRepository, PrescriptedExerciseRepository>();
+            //adding support for MVC
             services.AddMvc();
         }
 
@@ -62,7 +69,7 @@ namespace HOHSI
             app.UseHttpsRedirection();
             // allows wwwroot files to be accessed
             app.UseStaticFiles();
-           
+
             // Routing is responsible for matching incoming HTTP requests and dispatching those requests to the app's executable endpoints. 1
             app.UseRouting();
             // Enforces authetication
