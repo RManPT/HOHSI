@@ -18,6 +18,8 @@ namespace HOHSI
 {
     public class Startup
     {
+        //gets configuration for config files in order: appsettings.json, user secrets, environmental variables, CLI args
+        //each config source overrides the previous one
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,9 +39,11 @@ namespace HOHSI
      
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Middleware pipeline: logging, static files(wwwroot), MVC
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -54,14 +58,18 @@ namespace HOHSI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            // Enforce HTTPS in ASP.NET Core by redirecting HTTP requests to HTTPS
             app.UseHttpsRedirection();
+            // allows wwwroot files to be accessed
             app.UseStaticFiles();
-
+           
+            // Routing is responsible for matching incoming HTTP requests and dispatching those requests to the app's executable endpoints. 1
             app.UseRouting();
-
+            // Enforces authetication
             app.UseAuthentication();
+            // Enforces authorization (roles)
             app.UseAuthorization();
-
+            // Establishes endpoint patterns
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
