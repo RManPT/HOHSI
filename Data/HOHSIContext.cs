@@ -31,7 +31,7 @@ namespace HOHSI.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<PrescriptedExercise>().HasKey(pe => new { pe.PrescriptionId, pe.ExerciseId });
-        }
+                    }
     }
 }
 
