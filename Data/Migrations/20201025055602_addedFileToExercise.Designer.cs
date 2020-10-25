@@ -3,14 +3,16 @@ using System;
 using HOHSI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HOHSI.Data.Migrations
 {
     [DbContext(typeof(HOHSIContext))]
-    partial class HOHSIContextModelSnapshot : ModelSnapshot
+    [Migration("20201025055602_addedFileToExercise")]
+    partial class addedFileToExercise
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,9 +93,6 @@ namespace HOHSI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250) CHARACTER SET utf8mb4")
                         .HasMaxLength(250);
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
                         .IsRequired()
