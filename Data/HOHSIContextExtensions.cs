@@ -21,11 +21,13 @@ namespace HOHSI.Data
                     {
                         Name="Fully open",
                         Description="Try to fully open your hand",
+                        ImageName = "/img/no-image.jpg"
                     },
                     new Exercise()
                     {
                         Name="Fully close",
                         Description="Try to fully close your hand",
+                        ImageName = "/img/no-image.jpg"
                     }
                 });
                 context.SaveChanges();
@@ -35,7 +37,8 @@ namespace HOHSI.Data
         public static void EmptyDB(this HOHSIContext context)
         {
             context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
+            context.Database.Migrate();
             //EnsureDBSeeded(context);
         }
     }

@@ -4,16 +4,17 @@
     var target;
 
     $('body').append(`
-                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" area-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header ">
+                            <h5 class="modal-title" id="myModalLabel">Warning</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Warning</h4>
                         </div>
+                         <p>&nbsp;</p>
                         <div class="modal-body delete-modal-body">
-
                         </div>
+                        <p>&nbsp;</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel-action">Cancel</button>
                             <button type="button" class="btn btn-danger" id="confirm-action">Confirm</button>
