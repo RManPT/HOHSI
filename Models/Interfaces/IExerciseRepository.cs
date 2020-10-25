@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HOHSI.Models.Interfaces
 {
-    public interface IExerciseRepository : IRepository<Exercise>
+    public interface IExerciseRepository : IAsyncRepository<Exercise>
     {
     }
 }

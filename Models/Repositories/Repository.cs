@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace HOHSI.Models.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IAsyncRepository<T> where T : class
     {
         protected readonly HOHSIContext _context;
 
@@ -19,44 +20,58 @@ namespace HOHSI.Models.Repositories
         }
 
         //just to save coding time
-        protected void Save() => _context.SaveChanges();
-
-        public int Count(Func<T, bool> predicate)
+        protected async Task Save()
         {
-            return _context.Set<T>().Where(predicate).Count();
+            await _context.SaveChangesAsync();
         }
 
-        public void Create(T entity)
+        public async Task Create(T entity)
         {
-            _context.Add(entity);
-            Save();
+            await _context.AddAsync(entity);
+            await Save();
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
             _context.Remove(entity);
-            Save();
+            await Save();
         }
 
-        public IEnumerable<T> Find(Func<T, bool> predicate)
+        public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().Where(predicate);
+            return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return _context.Set<T>();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetById(int id)
         {
-            return _context.Set<T>().Find(id);
+            return await _context.Set<T>().FindAsync(id);
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            Save();
+            await Save();
+        }
+
+        public Task<IEnumerable<T>> Find(Func<T, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountWhere(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().CountAsync(predicate);
         }
     }
 }
+

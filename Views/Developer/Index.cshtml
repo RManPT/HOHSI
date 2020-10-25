@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Developer tools";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>
+                <h1>Tools</h1>
+                <h3>Use at your own risk</h3>
+                <p>
+                    <a asp-action="/">Back to Home</a>
+                </p>
+            </th>
+            <td>
+                <form asp-action="Empty">
+                    <input type="submit" value="Empty database" class="btn btn-danger" />
+                </form>
+            </td>
+            <td>
+                <form asp-action="Reseed">
+                    <input type="submit" value="Reseed database" class="btn btn-danger" />
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h2>Notes</h2>
+                <ul>
+                    <li>using MySql as DBMS and EF as ORM</li>
+                    <li>using https self signed certificate</li>
+                    <li>using interfaces as a best practice for allowing dependency injection (dependency inversion principle)   </li>
+                    <li>using repository pattern as best practice for separation of domain logic from data logic (single place for changes on data access and ORM independent)</li>
+                    <li>using asynchronous repositories</li>
+                </ul> </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h2>Credits</h2>
+                <ul>
+                    <li>
+                        Microsoft Docs for ASP.NET Core 3.1
+                    </li>
+                    <li>
+                        StackOverFlow.com
+                    </li>
+                    <li>
+                        Youtube channel : The coder
+                    </li>
+                    <li>
+                        Youtube channel : Alpha programming
+                    </li>
+                    <li>
+                        Youtube channel : IamTimCorey
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>

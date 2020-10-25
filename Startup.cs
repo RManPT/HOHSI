@@ -76,6 +76,21 @@ namespace HOHSI
             app.UseAuthentication();
             // Enforces authorization (roles)
             app.UseAuthorization();
+
+            // Ensures DB is up to date and seeded
+            using(var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<HOHSIContext>();
+                try {
+                    context.Database.Migrate();
+                } catch
+                {
+                    Console.WriteLine("already migrated");
+                }
+                context.EnsureDBSeeded();
+
+            }
+
             // Establishes endpoint patterns
             app.UseEndpoints(endpoints =>
             {
