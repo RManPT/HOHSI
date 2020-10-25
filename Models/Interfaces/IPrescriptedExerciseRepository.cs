@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HOHSI.Models.Interfaces
 {
-    public interface IPrescriptedExerciseRepository : IRepository<PrescriptedExercise>
+    public interface IPrescriptedExerciseRepository : IAsyncRepository<PrescriptedExercise>
     {
 
     }

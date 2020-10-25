@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HOHSI.Models.Interfaces
 {
-    public interface IPrescriptionRepository : IRepository<Prescription>
+    public interface IPrescriptionRepository : IAsyncRepository<Prescription>
     {
         IEnumerable<Prescription> GetAllWithExercises();
         Prescription GetWithExercises(int id);

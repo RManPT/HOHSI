@@ -32,18 +32,20 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - HOHSI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Hands of Hope SI - <a class="small" asp-area="" asp-controller="Developer" asp-action="Index">Developer tools and notes</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/delete.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
