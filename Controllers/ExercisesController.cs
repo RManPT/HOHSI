@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HOHSI.Data;
+﻿using HOHSI.Data;
 using HOHSI.Models;
 using HOHSI.Models.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using Microsoft.AspNetCore.Http;
 using HOHSI.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HOHSI.Controllers
 {
@@ -43,8 +40,7 @@ namespace HOHSI.Controllers
                 return NotFound();
             }
 
-            var exercise = await _context.Exercises
-                .FirstOrDefaultAsync(m => m.ExerciseId == id);
+            var exercise = await _exerciseRepository.GetById((int)id);
             if (exercise == null)
             {
                 return NotFound();
@@ -70,7 +66,8 @@ namespace HOHSI.Controllers
             {
                 string uniqueFileName = null;
                 //Save image to wwwroot/image
-                if (vm != null) {
+                if (vm != null)
+                {
                     string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "img/uploads/");
                     if (vm.Image == null) uniqueFileName = "/img/no-image.jpg";
                     else
@@ -80,13 +77,13 @@ namespace HOHSI.Controllers
                         await vm.Image.CopyToAsync(new FileStream(filePath, FileMode.Create));
                         uniqueFileName = "img/uploads/" + uniqueFileName;
                     }
-                    Exercise ex = new Exercise {
+                    Exercise ex = new Exercise
+                    {
                         Name = vm.Name,
                         Description = vm.Description,
                         ImageName = uniqueFileName
                     };
-                    _context.Add(ex);
-                    await _context.SaveChangesAsync();
+                    await _exerciseRepository.Create(ex);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -101,7 +98,7 @@ namespace HOHSI.Controllers
                 return NotFound();
             }
 
-            var exercise = await _context.Exercises.FindAsync(id);
+            var exercise = await _exerciseRepository.GetById((int)id);
             if (exercise == null)
             {
                 return NotFound();
@@ -125,10 +122,9 @@ namespace HOHSI.Controllers
             {
                 try
                 {
-                    _context.Update(exercise);
-                    await _context.SaveChangesAsync();
+                    await _exerciseRepository.Update(exercise);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException e)
                 {
                     if (!ExerciseExists(exercise.ExerciseId))
                     {
@@ -136,7 +132,10 @@ namespace HOHSI.Controllers
                     }
                     else
                     {
-                        throw;
+                        ViewBag.ErrorTitle = $"'{exercise.Name}' is inaccessible at the moment.";
+                        ViewBag.ErrorMessage = "This is a database concurrency error";
+                        ViewBag.ErrorDetails = e.Message;
+                        return View("Error");
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -171,9 +170,8 @@ namespace HOHSI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
-            _context.Exercises.Remove(exercise);
-            await _context.SaveChangesAsync();
+            var exercise = await _exerciseRepository.GetById((int)id);
+            await _exerciseRepository.Delete(exercise);
             return RedirectToAction(nameof(Index));
         }
 

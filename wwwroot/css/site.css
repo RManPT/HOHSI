@@ -90,3 +90,8 @@ body {
         background: rgb(139, 139, 139);
     }
 
+.error {
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid red;
+}
