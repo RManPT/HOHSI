@@ -1,11 +1,21 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <environment include="development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link id="dark-theme-style" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+
+    </environment>
+    <environment exclude="development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    </environment>
     <title>@ViewData["Title"] - HOHSI</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link id="dark-theme-style" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+
 </head>
 
 <body class="light">
@@ -17,52 +27,57 @@
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            Patients
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Patients" asp-action="Index">My profile</a>
-                            <a class="nav-link text-light" asp-area="" asp-controller="Patients" asp-action="Index">My Prescriptions</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            Management
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
-                            <a class="nav-link text-light" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescriptions</a>
-                            <a class="nav-link text-light" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            Management
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
-                            <a class="nav-link text-light" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescriptions</a>
-                            <a class="nav-link text-light" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
-                        </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Patient
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">My profile</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">My Prescriptions</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Management
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescriptions</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Administration
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Staff</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescriptions</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
                     </div>
                 </div>
-
             </div>
-        </nav>
+</nav>
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
             @RenderBody()
         </main>
     </div>
@@ -72,15 +87,21 @@
             <span id="theme-toggler" class="btn btn-dark btn-sm small switch">Switch Light/Dark</span>    &copy; 2020 - Hands of Hope SI by Rui Rodrigues, 5923@2LEI | <a class="small" asp-area="" asp-controller="Developer" asp-action="Index">Developer tools and notes</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/delete.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @RenderSection("Scripts", required: false)
+    <environment include="development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/delete.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+        <environment exclude="development">
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+            <script src="~/js/delete.js" asp-append-version="true"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+            @RenderSection("Scripts", required: false)
 
 
 </body>
