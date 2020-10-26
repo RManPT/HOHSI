@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
+using HOHSI.Areas.Identity.Data;
 using HOHSI.Data;
+using HOHSI.Models.Interfaces;
+using HOHSI.Models.Repositories;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HOHSI.Areas.Identity.Data;
-using HOHSI.Models;
-using HOHSI.Models.Interfaces;
-using HOHSI.Models.Repositories;
+using System;
 
 namespace HOHSI
 {
@@ -33,11 +27,17 @@ namespace HOHSI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-              services.AddDbContext<HOHSIContext>(options =>
-                  options.UseMySql(
-                      Configuration.GetConnectionString("HOHSIContextConnection")));
-              services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                  .AddEntityFrameworkStores<HOHSIContext>();
+            //configure rgdp
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddDbContext<HOHSIContext>(options =>
+                options.UseMySql(
+                    Configuration.GetConnectionString("HOHSIContextConnection")));
+            services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<HOHSIContext>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -65,6 +65,8 @@ namespace HOHSI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //enforces RGDP
+            app.UseCookiePolicy();
             // Enforce HTTPS in ASP.NET Core by redirecting HTTP requests to HTTPS
             app.UseHttpsRedirection();
             // allows wwwroot files to be accessed
@@ -78,17 +80,18 @@ namespace HOHSI
             app.UseAuthorization();
 
             // Ensures DB is up to date and seeded
-            using(var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<HOHSIContext>();
-                try {
+                try
+                {
                     context.Database.Migrate();
-                } catch
+                }
+                catch
                 {
                     Console.WriteLine("already migrated");
                 }
                 context.EnsureDBSeeded();
-
             }
 
             // Establishes endpoint patterns
