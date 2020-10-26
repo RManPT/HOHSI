@@ -11,7 +11,7 @@ $("#theme-toggler").click(function () {
 const LOCAL_STORAGE_KEY = "toggle-bootstrap-theme";
 const LOCAL_META_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 // you can change this url as needed
-const DARK_THEME_PATH = "https://bootswatch.com/4/cyborg/bootstrap.min.css";
+const DARK_THEME_PATH = "/css/dark-theme.css";
 const DARK_STYLE_LINK = document.getElementById("dark-theme-style");
 const THEME_TOGGLER = document.getElementById("theme-toggler");
 let isDark = LOCAL_META_DATA && LOCAL_META_DATA.isDark;
@@ -55,6 +55,56 @@ function disableDarkTheme() {
     $("body").fadeIn("slow");
 });*/
 
+//shows the body only when all elements are rendered
 $(document).ready(function () {
     $('body').show();
+});
+
+/*
+
+//toggles navbar buttons
+
+
+// Close the dropdown if the user clicks outside of it
+$(document).click(function (e) {
+    console.log($("#myDropdown"))
+    $(".myDropdown").each(function () {
+        if ($(this)[0].classList.contains('show')) {
+            console.log("did");
+            $(this)[0].classList.remove('show');
+
+        }
+    });
+    console.log("click");
+});
+
+$('.dropbtn').click(function () {
+    $(this).parent().find('div')[0].classList.toggle("show");
+});
+*/
+
+const $dropdown = $(".dropdown");
+const $dropdownToggle = $(".dropdown-toggle");
+const $dropdownMenu = $(".dropdown-menu");
+const showClass = "show";
+
+$(window).on("load resize", function () {
+    if (this.matchMedia("(min-width: 768px)").matches) {
+        $dropdown.hover(
+            function () {
+                const $this = $(this);
+                $this.addClass(showClass);
+                $this.find($dropdownToggle).attr("aria-expanded", "true");
+                $this.find($dropdownMenu).addClass(showClass);
+            },
+            function () {
+                const $this = $(this);
+                $this.removeClass(showClass);
+                $this.find($dropdownToggle).attr("aria-expanded", "false");
+                $this.find($dropdownMenu).removeClass(showClass);
+            }
+        );
+    } else {
+        $dropdown.off("mouseenter mouseleave");
+    }
 });

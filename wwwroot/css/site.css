@@ -72,3 +72,20 @@ body {
 body {
     display: none;
 }
+
+
+.nav-item {
+    padding: 20px;
+}
+
+    .nav-item:hover {
+        background: red;
+    }
+
+.dropdown-item {
+    background: rgb(198, 198, 198);
+}
+
+    .dropdown-item:hover {
+        background: rgb(139, 139, 139);
+    }
