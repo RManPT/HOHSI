@@ -7,7 +7,6 @@
 
 <div>
     <h1>@ViewData["Title"] (@Model.Count())</h1>
-    <a asp-action="Create">Create New</a>
 </div>
 <table class="table">
     <thead>
@@ -19,7 +18,9 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>@Html.DisplayNameFor(model => model.ImageName)</th>
-            <th>&nbsp;</th>
+            <th>
+                <a asp-action="Create">Create New</a>
+            </th>
         </tr>
     </thead>
     <tbody>
