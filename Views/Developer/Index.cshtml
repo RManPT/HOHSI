@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Developer tools";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <table class="table">
+        <tbody >
+            <tr>
+                <th>
+                    <h1>Tools</h1>
+                    <h3>Use at your own risk</h3>
+                    <p>
+                        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+                    </p>
+                </th>
+                <td>
+                    <form asp-action="Empty">
+                        <input type="submit" value="Empty database" class="btn btn-danger" />
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="Reseed">
+                        <input type="submit" value="Reseed database" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>
+                        <h2>Author</h2>
+                        Rui Manuel Nunes Rodrigues, 5923 | Engenharia Informática, 2º ano
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>
+                        <h2>Project</h2>
+                        System that enables the management of prescripted treatments using the HOH device
+                    </div>
+                    <div>
+                        <p>&nbsp;</p>
+                        <img src="~/img/tabela relacoes ti2.jpg" width="800" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h2>Credentials need</h2>
+                    Admin pass
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h2>Notes</h2>
+                    <ul>
+                        <li>using MySql as DBMS and EF as ORM</li>
+                        <li>using https self signed certificate</li>
+                        <li>using interfaces as a best practice for allowing dependency injection (dependency inversion principle)   </li>
+                        <li>using repository pattern as best practice for separation of domain logic from data logic (single place for changes on data access and ORM independent)</li>
+                        <li>using asynchronous repositories</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h2>Sources</h2>
+                    <ul>
+                        <li>Microsoft Docs for ASP.NET Core 3.1</li>
+                        <li>StackOverFlow.com</li>
+                        <li>Youtube channel : The coder</li>
+                        <li>Youtube channel : Alpha programming</li>
+                        <li>Youtube channel : IamTimCorey</li>
+                        <li>Zanid Haytam's article on repository pattern</li>
+                        <li>Bootstrap</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+</div>
