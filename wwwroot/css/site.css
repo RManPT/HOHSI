@@ -82,6 +82,10 @@ body {
         background: red;
     }
 
+.dropdown-menu {
+    margin:0;
+}
+
 .dropdown-item {
     background: rgb(198, 198, 198);
 }

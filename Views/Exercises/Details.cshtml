@@ -27,5 +27,11 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ExerciseId">Edit</a> |
+    <a class="confirmation badge badge-danger"
+       data-id="@Model.ExerciseId"
+       data-controller="Exercises"
+       data-action="DeleteConfirmed"
+       data-redirect-url="/Exercises/Index"
+       data-body-message="Are you sure you want to delete '@Model.Name' exercise?">Delete</a> |
     <a asp-action="Index">Back to List</a>
 </div>

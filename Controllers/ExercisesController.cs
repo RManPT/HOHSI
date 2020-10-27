@@ -56,8 +56,6 @@ namespace HOHSI.Controllers
         }
 
         // POST: Exercises/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ExerciseCreateVM vm)
@@ -83,7 +81,17 @@ namespace HOHSI.Controllers
                         Description = vm.Description,
                         ImageName = uniqueFileName
                     };
-                    await _exerciseRepository.Create(ex);
+                    try
+                    {
+                        await _exerciseRepository.Create(ex);
+                    }
+                    catch (DbUpdateConcurrencyException e)
+                    {
+                        ViewBag.ErrorTitle = $"There was an error creating this record.";
+                        ViewBag.ErrorMessage = "Reload the page and try again";
+                        ViewBag.ErrorDetails = e.Message;
+                        return View("Error");
+                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -159,19 +167,26 @@ namespace HOHSI.Controllers
               }
 
               return View(exercise);*/
-            var exercise = await _context.Exercises.FindAsync(id);
-            _context.Exercises.Remove(exercise);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>delete");
+            await _exerciseRepository.GetById((int)id);
+            throw new Exception("");
         }
 
-        // POST: Exercises/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // GET: Exercises/Delete/5
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var exercise = await _exerciseRepository.GetById((int)id);
-            await _exerciseRepository.Delete(exercise);
+            try
+            {
+                await _exerciseRepository.Delete(exercise);
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = $"'Exercise {id}' is inaccessible at the moment.";
+                ViewBag.ErrorMessage = "This is a database concurrency error";
+                ViewBag.ErrorDetails = e.Message;
+                return View("Error");
+            }
             return RedirectToAction(nameof(Index));
         }
 
