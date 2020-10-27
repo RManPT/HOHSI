@@ -27,7 +27,7 @@ namespace HOHSI.Models.Repositories
 
         public async Task Create(T entity)
         {
-            await _context.AddAsync(entity);
+            _context.Add(entity);
             await Save();
         }
 

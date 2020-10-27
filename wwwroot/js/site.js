@@ -92,9 +92,11 @@ $(window).on("load resize", function () {
 //datepicker
 
 $(function () {
-    $('#txtSelectedDate').datetimepicker({
+    $('#datetimepicker').datetimepicker({
        //format: 'LT'  //time only
-        //  format: 'L'//date only
+        //format: 'L'//date only
+        locale: 'pt',
+        format: "DD/MM/YYYY hh:mm",
         inline: true,
         sideBySide: true
     });

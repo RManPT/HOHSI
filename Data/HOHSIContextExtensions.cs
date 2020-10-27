@@ -30,8 +30,27 @@ namespace HOHSI.Data
                         ImageName = "/img/no-image.jpg"
                     }
                 });
+
                 context.SaveChanges();
             }
+
+            if (!context.Prescriptions.Any())
+            {
+                context.AddRange(new Prescription[]
+                {
+                    new Prescription()
+                    {
+                        PrescriptionId=1,
+                        DateAndTime = DateTime.Now,
+                        PatientId = 1,
+                        PrescriptorId=1
+                    }
+                });
+
+                context.SaveChanges();
+            }
+
+
         }
 
         public static void EmptyDB(this HOHSIContext context)

@@ -52,19 +52,27 @@ namespace HOHSI.Controllers
         }
 
         // POST: Prescriptions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PrescriptionId,Date,PatientId,PrescriptorId")] Prescription prescription)
+        public async Task<IActionResult> Create([Bind("PrescriptionId,DateAndTime,PatientId,PrescriptorId")] Prescription prescription)
         {
             if (ModelState.IsValid)
             {
-                prescription.Date = DateTime.UtcNow;
-                await _prescriptionRepository.Create(prescription);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _prescriptionRepository.Create(prescription);
+                    prescription = null;
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    ViewBag.ErrorTitle = $"There was an error creating this record.";
+                    ViewBag.ErrorMessage = "Reload the page and try again";
+                    ViewBag.ErrorDetails = e.Message;
+                    return View("Error");
+                }
             }
-            return View(prescription);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Prescriptions/Edit/5
@@ -84,8 +92,6 @@ namespace HOHSI.Controllers
         }
 
         // POST: Prescriptions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PrescriptionId,Date,PatientId,PrescriptorId")] Prescription prescription)
@@ -123,29 +129,39 @@ namespace HOHSI.Controllers
         // GET: Prescriptions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            /* if (id == null)
+             {
+                 return NotFound();
+             }
 
-            var prescription = await _context.Prescriptions
-                .FirstOrDefaultAsync(m => m.PrescriptionId == id);
-            if (prescription == null)
-            {
-                return NotFound();
-            }
-
-            return View(prescription);
+             var prescription = await _context.Prescriptions
+                 .FirstOrDefaultAsync(m => m.PrescriptionId == id);
+             if (prescription == null)
+             {
+                 return NotFound();
+             }
+            */
+            await _prescriptionRepository.GetById((int)id);
+            throw new Exception("");
         }
 
-        // POST: Prescriptions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // GET: Prescriptions/Delete/5
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var prescription = await _prescriptionRepository.GetById(id);
-            await _prescriptionRepository.Delete(prescription);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _prescriptionRepository.Delete(prescription);
+                ViewBag.Items = _prescriptionRepository.CountAll();
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = $"'Prescription {id}' is inaccessible at the moment.";
+                ViewBag.ErrorMessage = "This is a database concurrency error";
+                ViewBag.ErrorDetails = e.Message;
+                return View("Error");
+            }
+            return RedirectToAction("Index");
         }
 
         private bool PrescriptionExists(int id)
