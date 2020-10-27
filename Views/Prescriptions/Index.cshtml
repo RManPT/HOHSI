@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HOHSI.Models.Prescription>
+
+@{
+    ViewData["Title"] = "Prescriptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h1>@ViewData["Title"] (@Model.Count())</h1>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrescriptorId)
+            </th>
+            <th>
+                <a asp-action="Create">Create New</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.DateAndTime.ToString("dd/MM/yyyy HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatientId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrescriptorId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PrescriptionId">Details</a> |
+                    <a class="confirmation badge badge-danger"
+                       data-id="@item.PrescriptionId"
+                       data-controller="Prescriptions"
+                       data-action="DeleteConfirmed"
+                       data-body-message="Are you sure you want to delete prescription nº @item.PrescriptionId?">Delete</a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <th colspan="4" align="right">
+                <div>Total @ViewData["Title"]: @Model.Count()</div>
+            </th>
+        </tr>
+    </tbody>
+</table>

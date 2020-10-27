@@ -3,23 +3,23 @@
     ViewData["Title"] = "Error";
 }
 
-<img src="~/img/oops.jpg" />
-    <h1 class="text-danger">Error.</h1>
-    <h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="container">
+    <div class="col-md-8 mx-auto">
+        <img src="~/img/oops.jpg" height="200" />
 
-    <h3>If this error persists please contact our support team</h3>
-    <h4>help@tech4hope.com</h4>
-
-    @if (Model.ShowRequestId)
+        <h3 class="text-danger">An error occurred while processing your request.</h3>
+        <h4>If this error persists please contact our support team</h4>
+        <h5><a class="text-danger" href="mailto:help@tech4hope.com">help@tech4hope.com</a></h5>
+    </div>
+    @if (ViewBag.ErrorTitle != null)
     {
-        <p>
-            <strong>Request ID:</strong> <code>@Model.RequestId</code>
-        </p>
-    }
-@if (ViewBag["ErrorTitle"] != null)
-{
-    <h1 class="text-danger">@ViewBag.ErrorTitle</h1>
-    <h4 class="text-danger">@ViewBag.ErrorMessage</h4>
+        <div class="alert-danger error">
+            <h2 class="text-danger">@ViewBag.ErrorTitle</h2>
+            <h5 class="text-danger">@ViewBag.ErrorMessage</h5>
+            @ViewBag.ErrorDetails
+        </div>
 
-}
+    }
+
+</div>
 

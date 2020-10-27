@@ -41,6 +41,8 @@ namespace HOHSI
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMvc().AddRazorRuntimeCompilation();
+
             //Repository pattern: connecting interfaces with implementations
             services.AddTransient<IExerciseRepository, ExerciseRepository>();
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
@@ -66,12 +68,17 @@ namespace HOHSI
                 app.UseHsts();
             }
             //deals with bad urls
+            //app.UseExceptionHandler("/Home/Error");
             app.Use(async (context, next) =>
             {
-                await next();
+               await next();
                 if (context.Response.StatusCode == 404)
                 {
                     context.Request.Path = "/Home";
+                    await next();
+                } else if (context.Response.StatusCode < 200 && context.Response.StatusCode >=400)
+                {
+                    context.Request.Path = "/Home/Error";
                     await next();
                 }
             });
@@ -88,6 +95,7 @@ namespace HOHSI
             app.UseAuthentication();
             // Enforces authorization (roles)
             app.UseAuthorization();
+
 
             // Ensures DB is up to date and seeded
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())

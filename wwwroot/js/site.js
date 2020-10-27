@@ -60,29 +60,9 @@ $(document).ready(function () {
     $('body').show();
 });
 
-/*
-
-//toggles navbar buttons
 
 
-// Close the dropdown if the user clicks outside of it
-$(document).click(function (e) {
-    console.log($("#myDropdown"))
-    $(".myDropdown").each(function () {
-        if ($(this)[0].classList.contains('show')) {
-            console.log("did");
-            $(this)[0].classList.remove('show');
-
-        }
-    });
-    console.log("click");
-});
-
-$('.dropbtn').click(function () {
-    $(this).parent().find('div')[0].classList.toggle("show");
-});
-*/
-
+//dropdown menu
 const $dropdown = $(".dropdown");
 const $dropdownToggle = $(".dropdown-toggle");
 const $dropdownMenu = $(".dropdown-menu");
@@ -107,4 +87,17 @@ $(window).on("load resize", function () {
     } else {
         $dropdown.off("mouseenter mouseleave");
     }
+});
+
+//datepicker
+
+$(function () {
+    $('#datetimepicker').datetimepicker({
+       //format: 'LT'  //time only
+        //format: 'L'//date only
+        locale: 'pt',
+        format: "DD/MM/YYYY hh:mm",
+        inline: true,
+        sideBySide: true
+    });
 });

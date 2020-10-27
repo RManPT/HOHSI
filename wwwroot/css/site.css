@@ -82,6 +82,10 @@ body {
         background: red;
     }
 
+.dropdown-menu {
+    margin:0;
+}
+
 .dropdown-item {
     background: rgb(198, 198, 198);
 }
@@ -90,3 +94,8 @@ body {
         background: rgb(139, 139, 139);
     }
 
+.error {
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid red;
+}
