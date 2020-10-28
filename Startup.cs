@@ -48,6 +48,7 @@ namespace HOHSI
             services.AddTransient<IExerciseRepository, ExerciseRepository>();
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IPrescriptedExerciseRepository, PrescriptedExerciseRepository>();
+            services.AddTransient<IFilesToDeleteRepository, FilesToDeleteRepository>();
             //adding support for MVC
             services.AddMvc();
             //allow razor compilation at runtime

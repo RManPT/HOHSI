@@ -105,6 +105,20 @@ namespace HOHSI.Data.Migrations
                     b.ToTable("Exercises");
                 });
 
+            modelBuilder.Entity("HOHSI.Models.FilesToDelete", b =>
+                {
+                    b.Property<int>("fileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("filePath")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("fileId");
+
+                    b.ToTable("FilesToDelete");
+                });
+
             modelBuilder.Entity("HOHSI.Models.PrescriptedExercise", b =>
                 {
                     b.Property<int>("PrescriptionId")

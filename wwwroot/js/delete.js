@@ -41,11 +41,13 @@
         $("#deleteModal").modal('show');
     });
 
+
+
     $("#confirm-action").on('click', () => {
         $.get(url)
             .done((result) => {
                 if (!redirectUrl) {
-                    return $(target).parent().parent().hide("slow");
+                    return $(target).parent().parent().remove();
                 }
                 window.location.href = redirectUrl;
             })
