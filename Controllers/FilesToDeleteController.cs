@@ -59,27 +59,22 @@ namespace HOHSI.Controllers.Auxiliary
 
             if (System.IO.File.Exists(fileToDelete.filePath))
             {
-                while (true)
-                {
                     try
                     {
                         using (FileStream fs = new FileStream(fileToDelete.filePath,
                         FileMode.Open, FileAccess.ReadWrite,
                         FileShare.Delete, 100, true))
                         {
+                            //if it gets lock on file proceeds with deletion and removal from database
                             fs.ReadByte();
-
-                            // If we got this far the file is ready
-                            break;
+                            System.IO.File.Delete(fileToDelete.filePath);
+                            await _filesToDeleteRepository.Delete(fileToDelete);
                         }
                     }
                     catch (Exception e)
                     {
-                        System.Threading.Thread.Sleep(200);
+                        //System.Threading.Thread.Sleep(200);
                     }
-                }
-                System.IO.File.Delete(fileToDelete.filePath);
-                await _filesToDeleteRepository.Delete(fileToDelete);
             }
             else
             {
