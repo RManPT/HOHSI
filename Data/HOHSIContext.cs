@@ -32,6 +32,8 @@ namespace HOHSI.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<PrescriptedExercise>().HasKey(pe => new { pe.PrescriptionId, pe.ExerciseId });
                     }
+
+        public DbSet<HOHSI.Models.FilesToDelete> FilesToDelete { get; set; }
     }
 }
 

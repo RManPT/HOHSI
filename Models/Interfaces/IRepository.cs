@@ -16,6 +16,7 @@ namespace HOHSI.Models.Interfaces
         Task Delete(T entity);
         Task<int> CountAll();
         Task<int> CountWhere(Expression<Func<T, bool>> predicate);
+        Task<bool> Any(Expression<Func<T, bool>> predicate);
     }
 }
 

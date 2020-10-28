@@ -27,32 +27,37 @@ namespace HOHSI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //configure rgdp
+            //provides/configure cookie information rdgp
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //provides/configures db connection
             services.AddDbContext<HOHSIContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("HOHSIContextConnection")));
+            //provides/configures Identitity framework
             services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<HOHSIContext>();
-
+            //provides support for views
             services.AddControllersWithViews();
+            //provides support for razor
             services.AddRazorPages();
-            services.AddMvc().AddRazorRuntimeCompilation();
-
             //Repository pattern: connecting interfaces with implementations
             services.AddTransient<IExerciseRepository, ExerciseRepository>();
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IPrescriptedExerciseRepository, PrescriptedExerciseRepository>();
+            services.AddTransient<IFilesToDeleteRepository, FilesToDeleteRepository>();
             //adding support for MVC
             services.AddMvc();
+            //allow razor compilation at runtime
+            services.AddMvc().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // Middleware pipeline: logging, static files(wwwroot), MVC
+        // One middleware accepts form previous and sends to next, order is important
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -69,6 +74,7 @@ namespace HOHSI
             }
             //deals with bad urls
             //app.UseExceptionHandler("/Home/Error");
+            //every non
             app.Use(async (context, next) =>
             {
                await next();
@@ -76,7 +82,7 @@ namespace HOHSI
                 {
                     context.Request.Path = "/Home";
                     await next();
-                } else if (context.Response.StatusCode < 200 && context.Response.StatusCode >=400)
+                } else if (context.Response.StatusCode < 200 || context.Response.StatusCode >=400)
                 {
                     context.Request.Path = "/Home/Error";
                     await next();
