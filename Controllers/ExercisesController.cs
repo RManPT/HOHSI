@@ -5,6 +5,7 @@ using HOHSI.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
@@ -15,12 +16,14 @@ namespace HOHSI.Controllers
     public class ExercisesController : Controller
     {
         private readonly HOHSIContext _context;
+        private readonly IConfiguration _configuration;
         private readonly IExerciseRepository _exerciseRepository;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ExercisesController(HOHSIContext context, IExerciseRepository exerciseRepository, IWebHostEnvironment hostEnvironment)
+        public ExercisesController(IConfiguration configuration, HOHSIContext context, IExerciseRepository exerciseRepository, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _configuration = configuration;
             _exerciseRepository = exerciseRepository;
             _hostEnvironment = hostEnvironment;
         }
@@ -66,14 +69,14 @@ namespace HOHSI.Controllers
                 //Save image to wwwroot/image
                 if (vm != null)
                 {
-                    string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "img/uploads/");
+                    string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, _configuration.GetValue<string>("IMG_PATH_EXERCISES"));
                     if (vm.Image == null) uniqueFileName = "/img/no-image.jpg";
                     else
                     {
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_" + vm.Image.FileName;
                         string filePath = Path.Combine(uploadFolder, uniqueFileName);
                         await vm.Image.CopyToAsync(new FileStream(filePath, FileMode.Create));
-                        uniqueFileName = "img/uploads/" + uniqueFileName;
+                        uniqueFileName = _configuration.GetValue<string>("IMG_PATH_EXERCISES") + uniqueFileName;
                     }
                     Exercise ex = new Exercise
                     {
