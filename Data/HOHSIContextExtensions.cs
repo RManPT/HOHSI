@@ -21,13 +21,13 @@ namespace HOHSI.Data
                     {
                         Name="Fully open",
                         Description="Try to fully open your hand",
-                        ImageName = "/img/no-image.jpg"
+                        ImageName = "img\\no-image.jpg"
                     },
                     new Exercise()
                     {
                         Name="Fully close",
                         Description="Try to fully close your hand",
-                        ImageName = "/img/no-image.jpg"
+                        ImageName = "img\\no-image.jpg"
                     }
                 });
 

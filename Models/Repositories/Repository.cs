@@ -72,6 +72,10 @@ namespace HOHSI.Models.Repositories
         {
             return _context.Set<T>().CountAsync(predicate);
         }
+        public Task<bool> Any(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().AnyAsync(predicate);
+        }
     }
 }
 

@@ -19,13 +19,20 @@ namespace HOHSI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IExerciseRepository _exerciseRepository;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IFilesToDeleteRepository _filesToDeleteRepository;
 
-        public ExercisesController(IConfiguration configuration, HOHSIContext context, IExerciseRepository exerciseRepository, IWebHostEnvironment hostEnvironment)
+        public ExercisesController(
+            IConfiguration configuration,
+            HOHSIContext context,
+            IExerciseRepository exerciseRepository,
+            IWebHostEnvironment hostEnvironment,
+            IFilesToDeleteRepository filesToDeleteRepository)
         {
             _context = context;
             _configuration = configuration;
             _exerciseRepository = exerciseRepository;
             _hostEnvironment = hostEnvironment;
+            _filesToDeleteRepository = filesToDeleteRepository;
         }
 
         // GET: Exercises
@@ -70,10 +77,10 @@ namespace HOHSI.Controllers
                 if (vm != null)
                 {
                     string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, _configuration.GetValue<string>("IMG_PATH_EXERCISES"));
-                    if (vm.Image == null) uniqueFileName = "/img/no-image.jpg";
+                    if (vm.Image == null) uniqueFileName = _configuration.GetValue<string>("IMG_DEFAULT_EXERCISES");
                     else
                     {
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_" + vm.Image.FileName;
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "." + vm.Image.FileName.Split(".").Last();
                         string filePath = Path.Combine(uploadFolder, uniqueFileName);
                         await vm.Image.CopyToAsync(new FileStream(filePath, FileMode.Create));
                         uniqueFileName = _configuration.GetValue<string>("IMG_PATH_EXERCISES") + uniqueFileName;
@@ -137,7 +144,7 @@ namespace HOHSI.Controllers
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    if (!ExerciseExists(exercise.ExerciseId))
+                    if (!await ExerciseExists(exercise.ExerciseId))
                     {
                         return NotFound();
                     }
@@ -190,12 +197,18 @@ namespace HOHSI.Controllers
                 ViewBag.ErrorDetails = e.Message;
                 return View("Error");
             }
+            if (exercise.ImageName != _configuration.GetValue<string>("IMG_DEFAULT_EXERCISES"))
+            {
+                string filePath = Path.Combine(_hostEnvironment.WebRootPath, exercise.ImageName);
+                await _filesToDeleteRepository.Create(new FilesToDelete { filePath = filePath });
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ExerciseExists(int id)
+        private async Task<bool> ExerciseExists(int id)
         {
-            return _context.Exercises.Any(e => e.ExerciseId == id);
+            return await _exerciseRepository.Any(e => e.ExerciseId == id);
         }
     }
 }
