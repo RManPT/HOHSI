@@ -46,7 +46,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Controllers\Auxiliary\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\uploads\" />
   </ItemGroup>

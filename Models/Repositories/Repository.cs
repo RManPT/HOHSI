@@ -65,7 +65,7 @@ namespace HOHSI.Models.Repositories
 
         public Task<int> CountAll()
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().CountAsync();
         }
 
         public Task<int> CountWhere(Expression<Func<T, bool>> predicate)

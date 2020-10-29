@@ -36,10 +36,33 @@ namespace HOHSI.Controllers
         }
 
         // GET: Exercises
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             //return View(await _context.Exercises.ToListAsync());
-            return View(await _exerciseRepository.GetAll());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DescSortParm"] = sortOrder == "Desc" ? "Desc_desc" : "Desc";
+            ViewData["CurrentFilter"] = searchString;
+            var exercises = from s in _context.Exercises
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                exercises = exercises.Where(s => s.Name.ToLower().Contains(searchString.ToLower())
+                                       || s.Description.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    exercises = exercises.OrderByDescending(e => e.Name);
+                    break;
+                case "Desc":
+                    exercises = exercises.OrderBy(e => e.Description);
+                    break;
+                case "Desc_desc":
+                    exercises = exercises.OrderByDescending(e => e.Description);
+                    break;
+            }
+            ViewBag.Count = await _exerciseRepository.CountAll();
+            return View(await exercises.AsNoTracking().ToListAsync());
         }
 
         // GET: Exercises/Details/5
@@ -197,12 +220,13 @@ namespace HOHSI.Controllers
                 ViewBag.ErrorDetails = e.Message;
                 return View("Error");
             }
+            //send filename to FilesToDelete table for later deletion (avoids file locks)
             if (exercise.ImageName != _configuration.GetValue<string>("IMG_DEFAULT_EXERCISES"))
             {
                 string filePath = Path.Combine(_hostEnvironment.WebRootPath, exercise.ImageName);
                 await _filesToDeleteRepository.Create(new FilesToDelete { filePath = filePath });
             }
-
+            ViewBag.Count = await _exerciseRepository.CountAll().ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 

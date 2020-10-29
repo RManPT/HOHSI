@@ -39,6 +39,7 @@
         console.log(url);
         $(".delete-modal-body").text(bodyMessage);
         $("#deleteModal").modal('show');
+
     });
 
 
@@ -58,5 +59,4 @@
                 $("#deleteModal").modal('hide');
             });
     });
-
 }()));

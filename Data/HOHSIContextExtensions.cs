@@ -28,6 +28,24 @@ namespace HOHSI.Data
                         Name="Fully close",
                         Description="Try to fully close your hand",
                         ImageName = "img\\no-image.jpg"
+                    },
+                    new Exercise()
+                    {
+                        Name="Pinch",
+                        Description="Try to fully close your hand",
+                        ImageName = "img\\no-image.jpg"
+                    },
+                    new Exercise()
+                    {
+                        Name="Auto fully open",
+                        Description="Try to fully close your hand",
+                        ImageName = "img\\no-image.jpg"
+                    },
+                    new Exercise()
+                    {
+                        Name="Auto fully close",
+                        Description="Try to fully close your hand",
+                        ImageName = "img\\no-image.jpg"
                     }
                 });
 

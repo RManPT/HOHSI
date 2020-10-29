@@ -101,3 +101,20 @@ $(function () {
         sideBySide: true
     });
 });
+
+//auto search box
+var searchValue = $('#searchString').val();
+$(function () {
+    setTimeout(checkSearchChanged, 0.1);
+});
+
+function checkSearchChanged() {
+    var currentValue = $('#searchString').val();
+    if ((currentValue) && currentValue != searchValue && currentValue != '') {
+        searchValue = $('#searchString').val();
+        $('#searchSubmit').click();
+    }
+    else {
+        setTimeout(checkSearchChanged, 0.1);
+    }
+}
