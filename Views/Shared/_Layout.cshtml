@@ -10,6 +10,7 @@
         <!-- Bootstrap DatePicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
         <!-- Bootstrap DatePicker -->
+        <link rel="stylesheet" href="/css/loader/css-loader.css">
     </environment>
     <environment exclude="development">
         <link rel="stylesheet" href="/css/site.css" />
@@ -17,12 +18,13 @@
         <!-- Bootstrap DatePicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
         <!-- Bootstrap DatePicker -->
+        <link rel="stylesheet" href="/css/loader/css-loader.css">
     </environment>
     <title>@ViewData["Title"] - HOHSI</title>
 
 </head>
 
-<body class="light">
+<body >
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
@@ -85,9 +87,10 @@
         <main role="main" class="pb-3">
             <p>&nbsp;</p>
             @RenderBody()
+            <!--loader-->
+            <div id="loader" class="loader loader-default is-active" data-text="loading"></div>
         </main>
     </div>
-
     <footer class="border-top footer text-muted bg-dark">
         <div class="container">
             <span id="theme-toggler" class="btn btn-dark btn-sm small switch">Switch Light/Dark</span>    &copy; 2020 - Hands of Hope SI by Rui Rodrigues, 5923@2LEI | <a class="small" asp-area="" asp-controller="Developer" asp-action="Index">Developer tools and notes</a>
