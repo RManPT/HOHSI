@@ -1,4 +1,9 @@
-﻿
+﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// for details on configuring this project to bundle and minify static web assets.
+
+// Write your JavaScript code.
+// you can use app's unique identifier here
+
 $("#theme-toggler").click(function () {
     toggleTheme();
 });
@@ -46,17 +51,13 @@ function disableDarkTheme() {
 }
 
 
-/*$(document).load(function () {
-    $('.loader').fadeIn();
-    $('.loader').addClass("is-active");
+/*$(window).load(function () {
+    $("body").fadeIn("slow");
 });*/
-
 
 //shows the body only when all elements are rendered
 $(document).ready(function () {
-    /*$('body').show();
-    $('#loader').fadeOut();*/
-    $('#loader').removeClass("is-active");
+    $('body').show();
 });
 
 
@@ -102,7 +103,7 @@ $(function () {
 });
 
 //auto search box
-/*var searchValue = $('#searchString').val();
+var searchValue = $('#searchString').val();
 $(function () {
     setTimeout(checkSearchChanged, 0.1);
 });
@@ -116,4 +117,4 @@ function checkSearchChanged() {
     else {
         setTimeout(checkSearchChanged, 0.1);
     }
-}*/
+}
