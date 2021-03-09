@@ -17,12 +17,14 @@ namespace HOHSI
     {
         //gets configuration for config files in order: appsettings.json, user secrets, environmental variables, CLI args
         //each config source overrides the previous one
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,31 +42,41 @@ namespace HOHSI
             //provides/configures Identitity framework
             services.AddDefaultIdentity<HOHSIUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<HOHSIContext>();
+
+
             //provides support for views
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
             //provides support for razor
-            services.AddRazorPages();
+            //services.AddRazorPages();
+
             //Repository pattern: connecting interfaces with implementations
             services.AddTransient<IExerciseRepository, ExerciseRepository>();
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IPrescriptedExerciseRepository, PrescriptedExerciseRepository>();
             services.AddTransient<IFilesToDeleteRepository, FilesToDeleteRepository>();
+
             //adding support for MVC
             services.AddMvc();
-            //allow razor compilation at runtime
-            services.AddMvc().AddRazorRuntimeCompilation();
+            if (Env.IsDevelopment())
+            {
+                //allow razor compilation at runtime
+               // services.AddMvc().AddRazorRuntimeCompilation();
+                services.AddControllersWithViews().AddRazorRuntimeCompilation();
+                //services.AddRazorPages().AddRazorRuntimeCompilation();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // Middleware pipeline: logging, static files(wwwroot), MVC
         // One middleware accepts form previous and sends to next, order is important
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseStatusCodePages();
+                app.UseBrowserLink();
             }
             else
             {
@@ -97,7 +109,7 @@ namespace HOHSI
 
             // Routing is responsible for matching incoming HTTP requests and dispatching those requests to the app's executable endpoints. 1
             app.UseRouting();
-            // Enforces authetication
+            // Enforces authentication
             app.UseAuthentication();
             // Enforces authorization (roles)
             app.UseAuthorization();

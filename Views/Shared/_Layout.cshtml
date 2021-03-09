@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <environment include="development">
         <link rel="stylesheet" href="/css/site.css" />
-        <link id="dark-theme-style" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="/css/loader.css" />
+        <link id="alt-theme-style" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
         <!-- Bootstrap DatePicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
         <!-- Bootstrap DatePicker -->
     </environment>
     <environment exclude="development">
         <link rel="stylesheet" href="/css/site.css" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+         <link rel="stylesheet" href="/css/loader.css" />
+        <link id="alt-theme-style" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <!-- Bootstrap DatePicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
         <!-- Bootstrap DatePicker -->
@@ -23,18 +25,29 @@
 </head>
 
 <body class="light">
+<div id="spinner">
+  <div class="canvas canvas1">
+    <div class="spinner1 spinnerMax">
+      <div class="spinner1 spinnerMid">
+        <div class="spinner1 spinnerMin"></div>
+      </div>
+    </div>
+  </div>
+  </div>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-xl navbar-toggleable-xl navbar-dark bg-dark border-bottom box-shadow">
             <div class="container">
-                <div>
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>HOH|SI</h1><img src="/img/hohlogo1.png" class="rounded" width="90" /></a>
+                <div class="brand">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><div><img src="/img/hohlogo1.png" class="rounded logo" width="90" /><h3>HOH|SI</h3></div></a>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex">
+                <div class="navbar-collapse collapse d-xl-inline-flex">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
@@ -51,7 +64,7 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Administrative
+                                aaaAdministrative
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
@@ -66,50 +79,61 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Staff</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescriptions</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="FilesToDelete" asp-action="Index">Files</a>
                             </div>
                         </li>
                     </ul>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <div class="navbar-collapse collapse d-xl-inline-flex flex-xl-row-reverse">
                         <partial name="_LoginPartial" />
                     </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div id="menuwraper">
+
+        <a class="menu-item" asp-area="" asp-controller="Patients"><div>Staff</div></a>
+        <a class="menu-item" asp-area="" asp-controller="Patients"><div>Patients</div></a>
+        <a class="menu-item" asp-area="" asp-controller="Prescriptions"><div>Prescriptions</div></a>
+        <a class="menu-item" asp-area="" asp-controller="Exercises"><div>Exercises</div></a>
+        <a class="menu-item" asp-area="" asp-controller="FilesToDelete"><div>Files</div></a>
+    </div>
+    <div class="main-container">
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            <p>&nbsp;</p>
+        <main role="main" class="">
+
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted bg-dark">
-        <div class="container">
+        <div class="footer-container">
             <span id="theme-toggler" class="btn btn-dark btn-sm small switch">Switch Light/Dark</span>    &copy; 2020 - Hands of Hope SI by Rui Rodrigues, 5923@2LEI | <a class="small" asp-area="" asp-controller="Developer" asp-action="Index">Developer tools and notes</a>
         </div>
     </footer>
+
+
+
+
     <environment include="development">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/delete.js" asp-append-version="true"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/themes.js" asp-append-version="true"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-2JBCbWoMJPH+Uj7Wq5OLub8E5edWHlTM4ar/YJkZh3plwB2INhhOC3eDoqHm1Za/ZOSksrLlURLoyXVdfQXqwg==" crossorigin="anonymous"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="development">
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         <script src="~/js/delete.js" asp-append-version="true"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/themes.js" asp-append-version="true"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-2JBCbWoMJPH+Uj7Wq5OLub8E5edWHlTM4ar/YJkZh3plwB2INhhOC3eDoqHm1Za/ZOSksrLlURLoyXVdfQXqwg==" crossorigin="anonymous"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     @RenderSection("Scripts", required: false)
 

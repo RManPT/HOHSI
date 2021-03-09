@@ -1,4 +1,5 @@
-﻿using HOHSI.Data;
+﻿using HOHSI.Controllers.Auxiliary;
+using HOHSI.Data;
 using HOHSI.Models;
 using HOHSI.Models.Interfaces;
 using HOHSI.ViewModels;
@@ -36,33 +37,46 @@ namespace HOHSI.Controllers
         }
 
         // GET: Exercises
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            //return View(await _context.Exercises.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DescSortParm"] = sortOrder == "Desc" ? "Desc_desc" : "Desc";
             ViewData["CurrentFilter"] = searchString;
+
             var exercises = from s in _context.Exercises
-                           select s;
+                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                exercises = exercises.Where(s => s.Name.ToLower().Contains(searchString.ToLower())
-                                       || s.Description.Contains(searchString));
+                exercises = exercises.Where(s => s.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) || s.Description.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "name_desc":
                     exercises = exercises.OrderByDescending(e => e.Name);
                     break;
+
                 case "Desc":
                     exercises = exercises.OrderBy(e => e.Description);
                     break;
+
                 case "Desc_desc":
                     exercises = exercises.OrderByDescending(e => e.Description);
                     break;
             }
             ViewBag.Count = await _exerciseRepository.CountAll();
-            return View(await exercises.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<Exercise>.CreateAsync(exercises.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Exercises/Details/5

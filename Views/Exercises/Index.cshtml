@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HOHSI.Models.Exercise>
+﻿@model HOHSI.Controllers.Auxiliary.PaginatedList<HOHSI.Models.Exercise>
 
 @{
     ViewData["Title"] = "Exercises";
@@ -20,12 +20,12 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Name</a>
             </th>
             <th id="thmain">
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescSortParm"]">@Html.DisplayNameFor(model => model.Description)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">"Description"</a>
             </th>
-            <th>@Html.DisplayNameFor(model => model.ImageName)</th>
+            <th>Image Name</th>
             <th>
                 <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
             </th>
@@ -60,4 +60,22 @@
     </tbody>
 </table>
 
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
 
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

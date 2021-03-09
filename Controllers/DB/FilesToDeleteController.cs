@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HOHSI.Data;
-using HOHSI.Models;
-using Microsoft.Extensions.Configuration;
+﻿using HOHSI.Data;
 using HOHSI.Models.Interfaces;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace HOHSI.Controllers.Auxiliary
 {
@@ -52,29 +47,28 @@ namespace HOHSI.Controllers.Auxiliary
             return View(filesToDelete);
         }
 
-
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var fileToDelete = await _filesToDeleteRepository.GetById((int)id);
 
             if (System.IO.File.Exists(fileToDelete.filePath))
             {
-                    try
+                try
+                {
+                    using (FileStream fs = new FileStream(fileToDelete.filePath,
+                    FileMode.Open, FileAccess.ReadWrite,
+                    FileShare.Delete, 100, true))
                     {
-                        using (FileStream fs = new FileStream(fileToDelete.filePath,
-                        FileMode.Open, FileAccess.ReadWrite,
-                        FileShare.Delete, 100, true))
-                        {
-                            //if it gets lock on file proceeds with deletion and removal from database
-                            fs.ReadByte();
-                            System.IO.File.Delete(fileToDelete.filePath);
-                            await _filesToDeleteRepository.Delete(fileToDelete);
-                        }
+                        //if it gets lock on file proceeds with deletion and removal from database
+                        fs.ReadByte();
+                        System.IO.File.Delete(fileToDelete.filePath);
+                        await _filesToDeleteRepository.Delete(fileToDelete);
                     }
-                    catch (Exception e)
-                    {
-                        //System.Threading.Thread.Sleep(200);
-                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
             else
             {
