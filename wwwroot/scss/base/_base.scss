@@ -1,0 +1,34 @@
+@import 'links';
+@import 'buttons';
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    position: relative;
+    min-height:100vh;
+}
+
+body {
+    @include flex-container(100%, 100%, center, space-between);
+    flex-direction:column;
+    background: $body-background;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+
+header, main, footer {
+    flex-shrink:0;
+}
+

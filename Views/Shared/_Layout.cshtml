@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <environment include="development">
         <link rel="stylesheet" href="/css/site.css" />
         <link rel="stylesheet" href="/css/loader.css" />
+        <link rel="stylesheet" href="/css/styles.css" />
         <link id="alt-theme-style" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
         <!-- Bootstrap DatePicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
@@ -21,19 +21,17 @@
         <!-- Bootstrap DatePicker -->
     </environment>
     <title>@ViewData["Title"] - HOHSI</title>
-
 </head>
-
 <body class="light">
-<div id="spinner">
-  <div class="canvas canvas1">
-    <div class="spinner1 spinnerMax">
-      <div class="spinner1 spinnerMid">
-        <div class="spinner1 spinnerMin"></div>
-      </div>
+    <div id="spinner">
+        <div class="canvas canvas1">
+        <div class="spinner1 spinnerMax">
+          <div class="spinner1 spinnerMid">
+            <div class="spinner1 spinnerMin"></div>
+          </div>
+        </div>
+        </div>
     </div>
-  </div>
-  </div>
     <header>
         <nav class="navbar navbar-expand-xl navbar-toggleable-xl navbar-dark bg-dark border-bottom box-shadow">
             <div class="container">
@@ -64,7 +62,7 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                aaaAdministrative
+                                Administrative
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
@@ -91,7 +89,6 @@
         </nav>
     </header>
     <div id="menuwraper">
-
         <a class="menu-item" asp-area="" asp-controller="Patients"><div>Staff</div></a>
         <a class="menu-item" asp-area="" asp-controller="Patients"><div>Patients</div></a>
         <a class="menu-item" asp-area="" asp-controller="Prescriptions"><div>Prescriptions</div></a>
@@ -100,21 +97,17 @@
     </div>
     <div class="main-container">
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="">
-
+        <main role="main">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted bg-dark">
-        <div class="footer-container">
-            <span id="theme-toggler" class="btn btn-dark btn-sm small switch">Switch Light/Dark</span>    &copy; 2020 - Hands of Hope SI by Rui Rodrigues, 5923@2LEI | <a class="small" asp-area="" asp-controller="Developer" asp-action="Index">Developer tools and notes</a>
+    <footer class="border-top text-muted bg-dark">
+        <div class="footer">
+            <div><span id="theme-toggler" class="btn btn-dark btn-sm small switch">Switch Light/Dark</span></div>
+            <div>&copy; 2020 - Hands of Hope SI by Rui Rodrigues, 5923@2LEI</div>
+            <div><a class="small" asp-area="" asp-controller="Developer" asp-action="Index">Developer tools and notes</a></div>
         </div>
     </footer>
-
-
-
-
     <environment include="development">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -136,7 +129,6 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     @RenderSection("Scripts", required: false)
-
 
 </body>
 </html>

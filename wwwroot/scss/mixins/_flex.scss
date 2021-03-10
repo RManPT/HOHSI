@@ -1,0 +1,9 @@
+//mixin example with parameters
+@mixin flex-container($width,$height,$h-align, $v-align) {
+    width:$width;
+    height:$height;
+    display: flex;
+    align-items: $v-align;
+    justify-content: $h-align;
+
+}

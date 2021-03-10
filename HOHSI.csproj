@@ -21,6 +21,7 @@
     <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
     <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
     <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Remove="wwwroot\scss\components\StyleSheet.scss" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +69,24 @@
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\scss\base\_base.scss" />
+    <None Include="wwwroot\scss\base\_buttons.scss" />
+    <None Include="wwwroot\scss\base\_links.scss" />
+    <None Include="wwwroot\scss\components\_components.scss" />
+    <None Include="wwwroot\scss\components\_footer.scss" />
+    <None Include="wwwroot\scss\components\_main-menu.scss" />
+    <None Include="wwwroot\scss\components\_navbar.scss" />
+    <None Include="wwwroot\scss\fonts\_fonts.scss" />
+    <None Include="wwwroot\scss\functions\_functions.scss" />
+    <None Include="wwwroot\scss\mixins\_mixins.scss" />
+    <None Include="wwwroot\scss\pages\_pages.scss" />
+    <None Include="wwwroot\scss\themes\_themes.scss" />
+    <None Include="wwwroot\scss\utilities\_utilities.scss" />
+    <None Include="wwwroot\scss\variables\_break_points.scss" />
+    <None Include="wwwroot\scss\variables\_colors.scss" />
+    <None Include="wwwroot\scss\variables\_font-family.scss" />
+    <None Include="wwwroot\scss\variables\_font-size.scss" />
+    <None Include="wwwroot\scss\variables\_variables.scss" />
   </ItemGroup>
 
 

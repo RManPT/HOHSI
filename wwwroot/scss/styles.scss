@@ -1,0 +1,24 @@
+//Global stylesheet where to import all other stylesheets
+
+
+///////Piority//////
+//variables
+@import "variables/variables";
+//Functions
+@import "functions/functions";
+//Mixins
+@import "mixins/mixins";
+
+
+///////Common////////
+@import "base/base";
+//Components
+@import "components/components";
+//fonts
+@import "fonts/fonts";
+//Mixins
+@import "pages/pages";
+//Themes
+@import "themes/themes";
+//Utilities
+@import "utilities/utilities";

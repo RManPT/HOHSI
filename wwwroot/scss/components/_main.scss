@@ -1,0 +1,8 @@
+﻿main {
+    @include flex-container(80%, 100%, center, center);
+    margin: auto;
+    float: none;
+    flex-grow: 1;
+    height: auto;
+    min-height: 100%;
+}

@@ -1,0 +1,44 @@
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+.logo {
+    border: 3px solid white;
+    padding: 5px
+}
+
+.brand {
+    vertical-align: middle;
+    white-space: nowrap;
+    min-width: max-content;
+    margin-top: 10px;
+}
+
+.nav-item {
+    padding: 40px 20px 40px 20px;
+    margin: 0px 5px;
+    border: 1px solid #2f2f2f;
+    border-radius: 20px 2px;
+    box-shadow: 5px 5px 5px rgb(33, 33, 33);
+}
+
+.nav-item:hover, .nav-item:focus {
+    box-shadow: 20px 20px 20px rgb(33, 33, 33);
+    transform: translate3d(-5px,-5px,-5px);
+}
+
+
+.dropdown-menu {
+    margin: 0;
+}
+
+.dropdown-item {
+    background: red;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background: grey;
+    font-size: 20px;
+}
